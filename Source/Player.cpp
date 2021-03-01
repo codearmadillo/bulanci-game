@@ -24,11 +24,18 @@ void Player::Update(float deltaTime)
         this->m_velocity.y += this->m_speed;
     /** Update animation */
     if(this->m_velocity.x == 0.0f && this->m_velocity.y == 0.0f) {
+        /** Stop animation if running */
         if(this->m_animation.IsRunning())
             this->m_animation.Stop();
     } else {
+        /** Start animation if stopped */
         if(!this->m_animation.IsRunning())
             this->m_animation.Start();
+        if(this->m_velocity.x != 0) {
+            this->m_animation.SetAnimation(0, this->m_velocity.x < 0);
+        } else if(this->m_velocity.y != 0) {
+            this->m_animation.SetAnimation(1, false);
+        }
     }
     this->m_animation.Update(deltaTime);
     /** Move */
@@ -43,4 +50,12 @@ sf::Vector2f Player::GetPosition() {
 }
 sf::Vector2f Player::GetSize() {
     return this->m_body.getSize();
+}
+sf::FloatRect Player::GetCollisionBox() {
+    sf::Vector2f position = this->GetPosition();
+    sf::Vector2f size = this->GetSize();
+    return sf::FloatRect {
+            position.x, position.y,
+            position.x + size.x, position.y + size.y
+    };
 }

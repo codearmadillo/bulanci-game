@@ -10,4 +10,5 @@ public:
     ~StaticObject();
     void Update(float deltaTime);
     void Draw(sf::RenderWindow& window);
+    virtual sf::FloatRect GetCollisionBox();
 };

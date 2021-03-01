@@ -13,6 +13,7 @@ public:
     void Draw(sf::RenderWindow& window);
     sf::Vector2f GetPosition();
     sf::Vector2f GetSize();
+    sf::FloatRect GetCollisionBox();
 private:
     sf::Vector2f m_velocity;
     PlayerControls m_controls;
